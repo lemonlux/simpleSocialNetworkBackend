@@ -36,6 +36,7 @@ UserRoutes.get("/getById/:id", [isAuth], getUserById)
 UserRoutes.get("/getByIdP/:id", [isAuth], getUserByIdPopulated)
 UserRoutes.get("/getAll", [isAuth], getAll)
 UserRoutes.get("/getByUsername/:username", [isAuth], getByUsername)
+
 UserRoutes.patch("/likeComment/:idComment", [isAuth], toggleLikedComment)
 UserRoutes.patch("/likePost/:idPost", [isAuth], toggleLikedPost)
 UserRoutes.patch("/savePost/:idPost", [isAuth], toggleSavedPost)

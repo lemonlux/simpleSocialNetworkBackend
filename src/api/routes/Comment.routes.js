@@ -11,10 +11,10 @@ const CommentRoutes = require("express").Router();
 
 
 CommentRoutes.post("/createPostComment/:idPost", [isAuth], createPostComment)
-CommentRoutes.post("/updateComment/:idComment", [isOwner("comment")], updateComment)
+CommentRoutes.post("/updateComment/:idComment", updateComment)
 
-CommentRoutes.get("/getAll", getAll)
-CommentRoutes.delete("/delete/:iComment", [isOwner("comment")], deleteComment)
+CommentRoutes.get("/getAll/:id", getAll)
+CommentRoutes.delete("/delete/:idComment", deleteComment)
 
 
 

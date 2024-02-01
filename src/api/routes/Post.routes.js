@@ -16,11 +16,12 @@ const PostRoutes = require("express").Router();
 PostRoutes.post("/create", [isAuth], createPost);
 
 PostRoutes.get("/getById/:id", getPostById);
-PostRoutes.get("/getAll/populated/", getAllPostsPopulated);
+PostRoutes.get("/getAll", getAllPostsPopulated);
 PostRoutes.get("/search/:search", searchPost);
 PostRoutes.get("/getAllFollowing", getPostsByFollowing);
 
-PostRoutes.patch("/update/:id", [isOwner("post")], updatePost);
-PostRoutes.delete("/:id", [isOwner("post")], deletePost);
+PostRoutes.patch("/update/:id",  updatePost);
+
+PostRoutes.delete("/delete/:id",  deletePost);
 
 module.exports = PostRoutes;

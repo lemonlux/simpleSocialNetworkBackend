@@ -33,6 +33,15 @@ app.use(express.urlencoded({ limit: "5mb", extended: false }));
 
 //!------- RUTAS
 
+const ChatRoutes = require('./src/api/routes/Chat.routes');
+app.use("/api/v1/chat/", ChatRoutes)
+
+const CommentRoutes = require('./src/api/routes/Comment.routes');
+app.use("/api/v1/comment/", CommentRoutes)
+
+const PostRoutes = require('./src/api/routes/Post.routes');
+app.use("/api/v1/post/", PostRoutes)
+
 const UserRoutes = require('./src/api/routes/User.routes');
 app.use("/api/v1/user/", UserRoutes)
 
