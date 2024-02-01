@@ -9,6 +9,7 @@ const {
     getByUsername,
     getUserById,
     getUserByIdPopulated,
+    getAll,
     toggleLikedComment,
     toggleLikedPost,
     toggleSavedPost
@@ -17,6 +18,7 @@ const {
 //!--------ROUTES----------------------------------------------
 
 const UserRoutes = require("express").Router();
+
 UserRoutes.post("/register", upload.single("image"), register);
 UserRoutes.post("/login", userLogin);
 UserRoutes.post("/login/autologin", autoLogin);
@@ -31,10 +33,11 @@ UserRoutes.patch(
 );
 UserRoutes.get("/getById/:id", [isAuth], getUserById)
 UserRoutes.get("/getByIdP/:id", [isAuth], getUserByIdPopulated)
+UserRoutes.get("/getAll", [isAuth], getAll)
 UserRoutes.get("/getByUsername/:username", [isAuth], getByUsername)
-UserRoutes.patch("/likeComment/:id", [isAuth], toggleLikedComment)
-UserRoutes.patch("/likePost/:id", [isAuth], toggleLikedPost)
-UserRoutes.patch("/savePost/:id", [isAuth], toggleSavedPost)
+UserRoutes.patch("/likeComment/:idComment", [isAuth], toggleLikedComment)
+UserRoutes.patch("/likePost/:idPost", [isAuth], toggleLikedPost)
+UserRoutes.patch("/savePost/:idPost", [isAuth], toggleSavedPost)
 
 
 module.exports = UserRoutes;
