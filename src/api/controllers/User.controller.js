@@ -155,6 +155,7 @@ const updateUser = async (req, res, next) => {
     patchedUser._id = req.user._id;
     patchedUser.password = req.user.password;
     patchedUser.role = req?.body?.role ? req?.body?.role : req.user.role;
+    patchedUser.description = req?.body?.description ? req?.body?.description : req.user.description
     patchedUser.email = req.user.email;
     patchedUser.gender = req.user.gender;
     patchedUser.username = req.user.username;

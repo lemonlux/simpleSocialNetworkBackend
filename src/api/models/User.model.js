@@ -11,6 +11,11 @@ const UserSchema = new mongoose.Schema(
       unique: true,
       validate: [validator.isEmail, "Set a valid email address."],
     },
+    description:{
+      type: String,
+      trim: true,
+      maxLength: 140,
+    },
     username: {
       type: String,
       required: true,

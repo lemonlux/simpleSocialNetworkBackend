@@ -11,7 +11,8 @@ const CommentSchema = new Schema(
     textComment: { 
         type: String, 
         unique: false, 
-        required: true 
+        required: true,
+        minLength: 10, maxLength: 140,
     },
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
