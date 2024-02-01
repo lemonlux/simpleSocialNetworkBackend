@@ -1,3 +1,4 @@
+//<!--IMP                                             MODELS                                                     ->
 const User = require("../models/User.model");
 const Comment = require("../models/Comment.model");
 const Chat = require("../models/Chat.model");

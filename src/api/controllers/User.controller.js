@@ -523,6 +523,71 @@ const toggleSavedPost = async (req, res, next) => {
   }
 };
 
+//<!--SEC                                        TOGGLE FOLLOWING                                                  ->
+
+const toggleFollowUser = async (req, res, next) => {
+  try {
+    const { idUser } = req.params; // otherUser
+    const { _id, followed } = req.user;
+    if (followed.includes(idUser)) {
+      try {
+        await User.findByIdAndUpdate(_id, {
+          $pull: { followed: idUser }
+        });
+        try {
+          await User.findByIdAndUpdate(idUser, {
+            $pull: { followers: _id },
+          });
+          return res.status(200).json({
+            user: await User.findById(_id),
+            otherUser: await User.findById(idUser),
+          });
+        } catch (error) {
+          return res.status(409).json({
+            error: "Error pulling",
+            message: error.message,
+          });
+        }
+      } catch (error) {
+        return res.status(409).json({
+          error: "Error pulling",
+          message: error.message,
+        });
+      }
+    } else {
+      try {
+        await User.findByIdAndUpdate(_id, {
+          $push: { followed: idUser }
+        });
+        try {
+          await User.findByIdAndUpdate(idUser, {
+            $push: { followers: _id },
+          });
+          return res.status(200).json({
+            user: await User.findById(_id),
+            otherUser: await User.findById(idUser),
+          });
+        } catch (error) {
+          return res.status(409).json({
+            error: error.message,
+            message: "Error in pushing our id to saves in post.",
+          });
+        }
+      } catch (error) {
+        return res.status(409).json({
+          error: "Error pushing",
+          message: error.message,
+        });
+      }
+    }
+  } catch (error) {
+    return res.status(500).json({
+      error: "Catch error",
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   register,
   autoLogin,
@@ -535,4 +600,5 @@ module.exports = {
   toggleLikedComment,
   toggleLikedPost,
   toggleSavedPost,
+  toggleFollowUser
 };

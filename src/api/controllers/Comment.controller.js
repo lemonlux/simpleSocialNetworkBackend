@@ -1,6 +1,6 @@
+//<!--IMP                                             MODELS                                                     ->
 
 const Comment = require("../models/Comment.model");
-const { ObjectId } = require("mongodb");
 const Post = require("../models/Post.model");
 const User = require("../models/User.model");
 
@@ -157,7 +157,6 @@ const getAll = async (req, res, next) => {
               }
             });
   
-            // Count the number of false values in the test object
             const acc = Object.values(test).filter(
               (value) => value === false
             ).length;

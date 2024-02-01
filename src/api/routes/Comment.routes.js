@@ -1,4 +1,4 @@
-const { isAuth, isCommentOwner } = require('../../middleware/auth.middleware');
+const { isAuth, isOwner } = require('../../middleware/auth.middleware');
 const {
     createPostComment,
     updateComment,
@@ -11,10 +11,10 @@ const CommentRoutes = require("express").Router();
 
 
 CommentRoutes.post("/createPostComment/:idPost", [isAuth], createPostComment)
-CommentRoutes.post("/updateComment/:idComment", [isAuth], updateComment)
+CommentRoutes.post("/updateComment/:idComment", [isOwner("comment")], updateComment)
 
 CommentRoutes.get("/getAll", getAll)
-CommentRoutes.delete("/delete/:iComment", [isCommentOwner], deleteComment)
+CommentRoutes.delete("/delete/:iComment", [isOwner("comment")], deleteComment)
 
 
 

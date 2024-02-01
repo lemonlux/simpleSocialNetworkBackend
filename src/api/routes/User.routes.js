@@ -12,7 +12,8 @@ const {
     getAll,
     toggleLikedComment,
     toggleLikedPost,
-    toggleSavedPost
+    toggleSavedPost,
+    toggleFollowUser
   } = require("../controllers/User.controller");
 
 //!--------ROUTES----------------------------------------------
@@ -38,6 +39,7 @@ UserRoutes.get("/getByUsername/:username", [isAuth], getByUsername)
 UserRoutes.patch("/likeComment/:idComment", [isAuth], toggleLikedComment)
 UserRoutes.patch("/likePost/:idPost", [isAuth], toggleLikedPost)
 UserRoutes.patch("/savePost/:idPost", [isAuth], toggleSavedPost)
+UserRoutes.patch("/followUser/:idUser", [isAuth], toggleFollowUser)
 
 
 module.exports = UserRoutes;
