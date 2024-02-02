@@ -6,37 +6,32 @@ const Comment = require("../models/Comment.model");
 //<!--SEC                                      CREATE POST                                                    ->
 
 const createPost = async (req, res) => {
+  console.log("entro", req?.body.text)
   try {
     await Post.syncIndexes();
-    const { _id } = req.user;
 
     const postBody = {
-      creator: _id,
       text: req?.body.text,
-    };
-
+      creator: req.user._id
+    }
     const newPost = new Post(postBody);
-    const savedPost = await newPost.save();
-
-    const datedPosts = await Post.updateMany(
-      {},
-      { $convert: { input: "$createdAt", to: "date" } }
-    );
 
     try {
-      await User.findByIdAndUpdate(_id, { $push: { myPosts: savedPost._id } });
+      const savedPost = await newPost.save()
+    console.log("savedpost", savedPost)
+
 
       if (savedPost) {
+        await User.findByIdAndUpdate(req.user._id, { $push: { myPosts: savedPost._id } });
         return res.status(200).json({
-          savedPost,
-          datedPosts,
+          savedPost
         });
       } else {
         return res.status(409).json("Error saving post");
       }
     } catch (error) {
-      return res.status(404).json({
-        error: "Not found",
+      return res.status(409).json({
+        error: "Catch error",
         message: error.message,
       });
     }

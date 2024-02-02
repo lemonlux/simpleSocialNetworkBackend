@@ -4,14 +4,14 @@ dotenv.config();
 
 const generateToken = (id, email) => {
   if (!id || !email) {
-    throw new Error('Email or id not found');
+    throw new Error('Email o id no encontrados');
   }
 
   return jwt.sign({ id, email }, process.env.JWT_SECRET, { expiresIn: '1d' });
 };
 
 const verifyToken = (token) => {
-  if (!token) throw new Error('Token not found');
+  if (!token) throw new Error('Token no encontrado');
 
   return jwt.verify(token, process.env.JWT_SECRET);
 };
