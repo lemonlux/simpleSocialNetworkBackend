@@ -529,11 +529,11 @@ const toggleSavedPost = async (req, res, next) => {
 const toggleFollowUser = async (req, res, next) => {
   try {
     const { idUser } = req.params; // otherUser
-    const { _id, followed } = req.user;
-    if (followed.includes(idUser)) {
+    const { _id, following } = req.user;
+    if (following.includes(idUser)) {
       try {
         await User.findByIdAndUpdate(_id, {
-          $pull: { followed: idUser }
+          $pull: { following: idUser }
         });
         try {
           await User.findByIdAndUpdate(idUser, {
@@ -558,7 +558,7 @@ const toggleFollowUser = async (req, res, next) => {
     } else {
       try {
         await User.findByIdAndUpdate(_id, {
-          $push: { followed: idUser }
+          $push: { following: idUser }
         });
         try {
           await User.findByIdAndUpdate(idUser, {

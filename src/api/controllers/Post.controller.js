@@ -178,9 +178,8 @@ const getAllPostsPopulated = async (req, res, next) => {
       .populate("text creator likes saves comments");
 
     if (allPosts.length > 0) {
-      return res.status(200).json({
-        allPosts,
-      });
+      return res.status(200).json(
+        allPosts);
     } else {
       return res.status(404).json({
         error: "Posts not found",
@@ -198,18 +197,17 @@ const getAllPostsPopulated = async (req, res, next) => {
 
 const getPostsByFollowing = async (req, res, next) => {
   try {
-    const { followed } = req.user;
-    console.log(followed);
+    const { following } = req?.user;
+    console.log(following);
     const postSearch = await Post.find({
-      creator: { $regex: followed, $options: "i" },
+      creator: { $in: following },
     })
       .sort({ createdAt: -1 })
       .populate("creator likes saves comments");
     console.log("entro");
-    return res.status(200).json({
-      followed,
-      postSearch,
-    });
+    return res.status(200).json(
+      postSearch
+    );
   } catch (error) {
     return res.status(500).json({
       error: "Catch error",
@@ -218,25 +216,6 @@ const getPostsByFollowing = async (req, res, next) => {
   }
 };
 
-//   const getAllPostByType = async (req, res, next) => {
-//     console.log(req.params);
-//     const { type } = req.params;
-//     try {
-//       const postsByType = await Post.find({
-//         type: { $in: type },
-//       })
-//         .sort({ createdAt: -1 })
-//         .populate("creator likes comments");
-
-//       console.log(postsByType);
-//       return res.status(200).json(postsByType);
-//     } catch (error) {
-//       return res.status(500).json({
-//         error: "Error en el catch",
-//         message: error.message,
-//       });
-//     }
-//   };
 
 //<!--SEC                                   SEARCH POSTS                                           ->
 

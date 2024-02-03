@@ -18,7 +18,7 @@ PostRoutes.post("/create", [isAuth], createPost);
 PostRoutes.get("/getById/:id", getPostById);
 PostRoutes.get("/getAll", getAllPostsPopulated);
 PostRoutes.get("/search/:search", searchPost);
-PostRoutes.get("/getAllFollowing", getPostsByFollowing);
+PostRoutes.get("/getAllFollowing", [isAuth], getPostsByFollowing);
 
 PostRoutes.patch("/update/:id",  updatePost);
 

@@ -54,7 +54,7 @@ const UserSchema = new mongoose.Schema(
     savedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
     chats: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chat" }],
     followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    followed: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   {
     timestamps: true,

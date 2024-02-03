@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema(
     {
-      text: { type: String, required: true, minLength: 10, maxLength: 140 },
+      text: { type: String, required: true, minLength: 1, maxLength: 280 },
       creator: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
       likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
       saves: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
