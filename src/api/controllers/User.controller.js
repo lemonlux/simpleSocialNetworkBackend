@@ -290,11 +290,30 @@ const getByUsername = async (req, res, next) => {
       username: { $regex: username, $options: "i" },
     }).sort({ createdAt: -1 });
     console.log(UsersByUsername);
-    if (UsersByUsername.length > 0) {
+
       return res.status(200).json(UsersByUsername);
-    } else {
-      return res.status(404).json("This username doesn't exist");
-    }
+
+  } catch (error) {
+    return res.status(500).json({
+      error: "Catch error",
+      message: error.message,
+    });
+  }
+};
+
+const getByUsernamfgffde = async (req, res, next) => {
+  try {
+    const { search } = req.params;
+    const usernameSearch = await User.find({
+      username: { $in: search },
+    })
+      .sort({ createdAt: -1 })
+      .populate("myPosts");
+
+    console.log("entro");
+    return res.status(200).json(
+      usernameSearch
+    );
   } catch (error) {
     return res.status(500).json({
       error: "Catch error",

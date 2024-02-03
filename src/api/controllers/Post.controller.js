@@ -229,10 +229,9 @@ const searchPost = async (req, res, next) => {
       .populate("creator likes saves comments");
 
     console.log("entro");
-    return res.status(200).json({
-      search,
-      postSearch,
-    });
+    return res.status(200).json(
+      postSearch
+    );
   } catch (error) {
     return res.status(500).json({
       error: "Catch error",
