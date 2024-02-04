@@ -156,6 +156,7 @@ const updateUser = async (req, res, next) => {
     patchedUser.password = req.user.password;
     patchedUser.role = req?.body?.role ? req?.body?.role : req.user.role;
     patchedUser.description = req?.body?.description ? req?.body?.description : req.user.description
+
     patchedUser.email = req.user.email;
     patchedUser.gender = req.user.gender;
     patchedUser.username = req.user.username;
@@ -167,6 +168,7 @@ const updateUser = async (req, res, next) => {
     patchedUser.likedPosts = req.user.likedPosts;
     patchedUser.followers = req.user.followers;
     patchedUser.following = req.user.following;
+    
 
     console.log("PATCHED USERRRRRRRR", patchedUser);
 
@@ -185,7 +187,7 @@ const updateUser = async (req, res, next) => {
     }
 
     try {
-      await User.findByIdAndUpdate(req.user._id, updating);
+      await User.findByIdAndUpdate(req.user._id, patchedUser);
       if (req.file) deleteImgCloudinary(req.user.image);
 
       //!-------- TESTING
@@ -219,7 +221,7 @@ const updateUser = async (req, res, next) => {
       });
     } catch (error) {
       return res.status(409).json({
-        error: "error en el catch del update",
+        error: "Error updating",
         message: error.message,
       });
     }
