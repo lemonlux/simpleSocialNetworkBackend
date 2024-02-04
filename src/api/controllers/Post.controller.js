@@ -150,9 +150,14 @@ const getPostById = async (req, res, next) => {
 const getPostByIdPopulated = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const postById = await Post.findById(id).populate(
-      "text creator likes saves comments"
-    );
+    const postById = await Post.findById(id).populate([
+      { path: "creator", model: User },
+      { path: "saves", model: User },
+      { path: "likes", model: User },
+        { path: "comments", model: Comment, populate: "creator" },
+      
+    ]);
+    console.log(postById)
     if (postById) {
       return res.status(200).json(postById);
     } else {

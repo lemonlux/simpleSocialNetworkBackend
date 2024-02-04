@@ -15,7 +15,7 @@ const PostRoutes = require("express").Router();
 
 PostRoutes.post("/create", [isAuth], createPost);
 
-PostRoutes.get("/getById/:id", getPostById);
+PostRoutes.get("/getById/:id", getPostByIdPopulated);
 PostRoutes.get("/getAll", getAllPostsPopulated);
 PostRoutes.get("/search/:search", searchPost);
 PostRoutes.get("/getAllFollowing", [isAuth], getPostsByFollowing);

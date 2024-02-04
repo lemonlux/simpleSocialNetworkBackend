@@ -12,7 +12,7 @@ const CommentSchema = new Schema(
         type: String, 
         unique: false, 
         required: true,
-        minLength: 10, maxLength: 140,
+        minLength: 1, maxLength: 140,
     },
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
