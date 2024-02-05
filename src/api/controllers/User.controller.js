@@ -12,6 +12,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/User.model");
 const Post = require("../models/Post.model");
 const Comment = require("../models/Comment.model");
+const Chat = require("../models/Chat.model");
 
 //<!--SEC                                   REDIRECT  REGISTRATION                                                   ->
 //  WORKS CORRECTLY
@@ -260,8 +261,17 @@ const getUserById = async (req, res, next) => {
 const getUserByIdPopulated = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const userById = await User.findById(id).populate(
-      "likedComments sentComments receivedComments myPosts likedPosts likedPosts chats followers followed"
+    const userById = await User.findById(id).populate([
+      { path: "likedComments", model: Comment },
+      { path: "sentComments", model: Comment },
+      { path: "receivedComments", model: Comment },
+      { path: "myPosts", model: Post },
+      { path: "likedPosts", model: Post },
+      { path: "chats", model: Chat },
+      { path: "followers", model: User },
+      { path: "following", model: User },
+      { path: "savedPosts", model: Post, populate: "creator" },
+    ]
     );
     if (userById) {
       return res.status(200).json(userById);
@@ -302,25 +312,26 @@ const getByUsername = async (req, res, next) => {
     });
   }
 };
-
-const getByUsernamfgffde = async (req, res, next) => {
+//<!--SEC                                        GET BY USERNAME POPULATED                                                   ->
+//WORKS CORRECTLY
+const getUserByUsernamePopulated = async (req, res, next) => {
   try {
-    const { search } = req.params;
-    const usernameSearch = await User.find({
-      username: { $in: search },
-    })
-      .sort({ createdAt: -1 })
-      .populate("myPosts");
-
-    console.log("entro");
-    return res.status(200).json(
-      usernameSearch
+    const { username } = req.params;
+    const userById = await User.findOne({ username }).populate(
+      "likedComments myPosts likedPosts"
     );
+    if (userById) {
+      return res.status(200).json(userById);
+    } else {
+      return res.status(404).json("That user doesn't exist.");
+    }
   } catch (error) {
-    return res.status(500).json({
-      error: "Catch error",
-      message: error.message,
-    });
+    return (
+      res.status(500).json({
+        error: "Catch error",
+        message: error.message,
+      }) && next(error)
+    );
   }
 };
 
@@ -616,6 +627,7 @@ module.exports = {
   userLogin,
   updateUser,
   getByUsername,
+  getUserByUsernamePopulated,
   getUserById,
   getUserByIdPopulated,
   getAll,
