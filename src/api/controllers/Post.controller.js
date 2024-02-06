@@ -233,7 +233,6 @@ const searchPost = async (req, res, next) => {
       .sort({ createdAt: -1 })
       .populate("creator likes saves comments");
 
-    console.log("entro");
     return res.status(200).json(
       postSearch
     );

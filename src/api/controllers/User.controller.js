@@ -272,7 +272,7 @@ const getUserByIdPopulated = async (req, res, next) => {
       { path: "following", model: User },
       { path: "savedPosts", model: Post, populate: "creator" },
     ]
-    );
+    )
     if (userById) {
       return res.status(200).json(userById);
     } else {
@@ -302,7 +302,7 @@ const getByUsername = async (req, res, next) => {
       username: { $regex: username, $options: "i" },
     }).sort({ createdAt: -1 });
     console.log(UsersByUsername);
-
+    
       return res.status(200).json(UsersByUsername);
 
   } catch (error) {
@@ -317,8 +317,11 @@ const getByUsername = async (req, res, next) => {
 const getUserByUsernamePopulated = async (req, res, next) => {
   try {
     const { username } = req.params;
-    const userById = await User.findOne({ username }).populate(
-      "likedComments myPosts likedPosts"
+    const userById = await User.findOne({ username }).populate([
+      { path: "likedComments", model: Comment },
+      { path: "myPosts", model: Post },
+      { path: "likedPosts", model: Post, populate: "creator" }
+    ]
     );
     if (userById) {
       return res.status(200).json(userById);
@@ -342,7 +345,7 @@ const getUserByUsernamePopulated = async (req, res, next) => {
 
 const getAll = async (req, res, next) => {
   try {
-    const allUsers = await User.find();
+    const allUsers = await User.find().sort({ createdAt: -1 });
     if (allUsers.length > 0) {
       return res.status(200).json(allUsers);
     } else {
