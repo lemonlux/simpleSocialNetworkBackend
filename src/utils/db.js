@@ -6,7 +6,11 @@ const MONGO_URI = process.env.MONGO_URI
 
 const connect = async () =>{
     try {
-        const db = await mongoose.connect(MONGO_URI)
+        const db = await mongoose.connect(MONGO_URI, {
+            useNewUrlParser: true,
+      
+            useUnifiedTopology: true,
+          });
         const { name, host } = db.connection
         console.log(`Conectada la DB con el host ${host} con el nombre ${name} ✅`)
         
